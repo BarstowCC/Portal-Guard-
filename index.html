@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portal Access – Barstow Community College (Safe Mirror)</title>
+
+  <style>
+    :root{
+      --blue:#002269;
+      --accent:#0b57d0;
+      --border:#d6d9de;
+      --text:#23262b;
+      --muted:#5b6572;
+    }
+    html,body{height:100%}
+    body{
+      margin:0; font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text); background-color:#0f1630;
+      /* Gradient fallback (used if external background can’t load) */
+      background-image: radial-gradient(1200px 600px at 10% 10%, #1b2a6b 0%, #0f1630 60%), linear-gradient(#0f1630, #0f1630);
+      background-attachment: fixed; background-size: cover; background-repeat: no-repeat;
+    }
+    /* When background loads, layer it over the gradient */
+    body.bg-loaded{
+      background-image: url("https://login.barstow.edu/_layouts/images/PG/images/background2.jpg"),
+                        radial-gradient(1200px 600px at 10% 10%, #1b2a6b 0%, #0f1630 60%),
+                        linear-gradient(#0f1630, #0f1630);
+    }
+
+    .brand-bar{
+      background: rgba(0,0,0,.25);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .brand-wrap{
+      display:flex; align-items:center; gap:16px; max-width: 1100px; margin:0 auto;
+    }
+    .brand-wrap img{height:40px; object-fit: contain}
+
+    .login-wrap{
+      max-width: 1100px; margin: 32px auto; padding: 0 16px;
+      display: grid; grid-template-columns: 1fr; gap: 16px;
+    }
+    .college-row{
+      display:flex; align-items:center; gap:16px;
+      background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.10);
+      border-radius: 12px; padding: 12px 16px; color:#fff;
+    }
+    .college-row img{height:56px; width:auto}
+    .college-row h2{margin:0; font-size:1.35rem; font-weight:800; color:#fff}
+
+    .logonbox{
+      background:#fff; border:1px solid var(--border); border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.20);
+      overflow:hidden;
+    }
+    .login-title{
+      margin:0; padding:18px 20px; color:#fff; background:var(--blue);
+      font-size:1.15rem; font-weight:700;
+    }
+    .form{padding: 18px 20px; display:grid; gap:10px}
+    .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top: 6px}
+    .btn{
+      border:1px solid var(--border); background:#fff; color:var(--text);
+      padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:600;
+    }
+    .btn.primary{background:var(--accent); color:#fff; border-color: transparent}
+    .btn:focus{outline:2px solid rgba(11,87,208,.4); outline-offset:2px}
+
+    #ErrMsgLogin{margin: 12px 20px 0 20px; min-height: 1.2em}
+    .msg{padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:#f7f8fb; color:#111}
+    .msg.info{border-color:#b7cdf6; background:#edf3ff}
+    .msg.warn{border-color:#f1c27b; background:#fff7ea}
+
+    /* 500apps container: responsive with safe overflow for fixed-size widget */
+    .widget-shell{
+      padding: 0; margin: 0; border-top: 1px solid #e6e8ec;
+    }
+    .widget-frame{
+      width:100%;
+      overflow:auto;
+      border-radius: 0 0 14px 14px;
+      border-top: 1px solid var(--border);
+      background:#fff;
+    }
+    .widget-frame-inner{
+      min-width: 320px;
+      min-height: 780px; /* taller than 750 for paddings */
+      padding: 16px;
+    }
+    @media (max-width: 1280px){
+      .widget-frame-inner{ min-height: 820px; }
+    }
+    @media (max-width: 768px){
+      .widget-frame-inner{ min-height: 860px; padding: 10px; }
+    }
+
+    .branded-footer{
+      margin-top:40px; padding: 16px; background:#fff; border-top:1px solid var(--border);
+    }
+    .footer-inner{max-width:1100px; margin:0 auto; display:flex; gap:16px; align-items:center; flex-wrap:wrap}
+    #footerLogo img{height:22px}
+    .footer-help{margin-left:auto}
+    .footer-help a{color:var(--accent); text-decoration:none}
+    .footer-help a:hover{text-decoration:underline}
+    .copyright{color:#4b4f57}
+
+    .noscript-msg{
+      margin: 16px; padding:12px 14px; background:#fff6e6; border:1px solid #f1c27b; border-radius:10px; color:#5b3c00
+    }
+
+    .pgHidden{display:block !important}
+  </style>
+</head>
+<body>
+  <!-- Top brand bar -->
+  <header class="brand-bar">
+    <div class="brand-wrap">
+      <!-- Optional BIO-key brand (hide if missing) -->
+      <img
+        id="LogoImg"
+        src="./assets/images/bkyi%20pure%20white.png"
+        alt="BIO-key brand"
+        onerror="this.style.display='none'"
+      />
+      <!-- BCC brand (primary) using external URL -->
+      <img
+        id="BrandedLogo"
+        src="https://login.barstow.edu/_layouts/images/PG/images/BCCTransparantLogo.png"
+        alt="Barstow Community College Logo"
+        onerror="this.style.display='none'"
+      />
+    </div>
+  </header>
+
+  <main id="login" class="login-wrap" role="main">
+    <!-- College header row -->
+    <section class="college-row" aria-label="Institution Header">
+      <img
+        id="bccLoginLogo"
+        src="https://login.barstow.edu/_layouts/images/PG/images/BCCTransparantLogo.png"
+        alt="Barstow Community College Logo"
+        onerror="this.style.display='none'"
+      />
+      <h2>Barstow Community College</h2>
+    </section>
+
+    <!-- Logon panel with embedded 500apps form -->
+    <section class="logonbox" aria-label="Login Panel">
+      <h2 class="login-title">Log In to Portal</h2>
+      <div id="ErrMsgLogin" role="status" aria-live="polite"></div>
+
+      <!-- Useful links -->
+      <div class="form">
+        <div class="actions">
+          <button type="button" class="btn" onclick="window.open('./How_To/index.html','_blank')">Login Instructions</button>
+          <button type="button" class="btn" onclick="window.open('https://helpdesk.barstow.edu/','_blank')">Contact HelpDesk</button>
+        </div>
+      </div>
+
+      <!-- 500apps widget container -->
+      <div class="widget-shell">
+        <div class="widget-frame" aria-label="External login form container">
+          <div class="widget-frame-inner">
+            <div id="forms-566065-3044"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="branded-footer" role="contentinfo">
+    <div class="footer-inner">
+      <a href="https://bio-key.com" target="_blank" id="footerLogo" rel="noopener">
+        <img id="footerCorporateLink" src="./assets/images/bk.svg" alt="BIO-key" onerror="this.style.display='none'">
+      </a>
+      <div class="footer-help">Having Trouble? <a href="mailto:support@acme.com">Contact Support</a></div>
+      <div class="copyright">© 2026 BIO-key International<sup>®</sup> <a href="https://www.bio-key.com/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>.</div>
+    </div>
+  </footer>
+
+  <noscript>
+    <div class="noscript-msg">JavaScript is disabled. The page still displays, but the embedded form requires JavaScript.</div>
+  </noscript>
+
+  <!-- Safety-first JS (no PortalGuard dependencies) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      // Ensure nothing remains hidden
+      document.querySelectorAll('.pgHidden').forEach(el => el.classList.remove('pgHidden'));
+
+      // Load external background image; fallback stays if it fails
+      const bg = new Image();
+      bg.onload = function(){ document.body.classList.add('bg-loaded'); };
+      bg.onerror = function(){ console.warn('Background image missing — using gradient fallback'); };
+      bg.src = 'https://login.barstow.edu/_layouts/images/PG/images/background2.jpg';
+    });
+  </script>
+
+  <!-- 500apps widget loader -->
+  <script>
+    (async (f, o, r, m, s) => {
+      m = o.getElementsByTagName("head")[0];
+      s = o.createElement("script");
+      s.async = 1;
+      s.src = r;
+      s.onload = async () => {
+        try {
+          await f.wg.init(
+            "forms",
+            "us1",
+            566065,
+            3357003,
+            "forms/3044/embed",
+            { width: "1200px", height: "750px" },
+            "widget",
+            "forms-566065-3044"
+          );
+        } catch (e) {
+          const msg = document.getElementById('ErrMsgLogin');
+          if (msg){
+            msg.className = 'msg warn';
+            msg.textContent = 'The embedded login form failed to load. Please try again or contact the HelpDesk.';
+          }
+          console.error('500apps form init failed:', e);
+        }
+      };
+      m.appendChild(s);
+    })(window, document, "https://infinity-public-js.500apps.com/widget.min.js");
+  </script>
+</body>
+</html>
